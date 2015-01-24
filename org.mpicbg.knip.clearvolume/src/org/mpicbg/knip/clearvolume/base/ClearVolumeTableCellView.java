@@ -25,13 +25,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private ImgPlus<T> imgPlus;
 
     /**
-     *
-     */
-    public ClearVolumeTableCellView() {
-        System.out.println("abc");
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -60,10 +53,29 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
             @Override
             public void actionPerformed(final ActionEvent e) {
+
                 if (imgPlus != null) {
-                    final ClearVolumeRendererInterface cv =
-                            ClearVolume.initRealImg(imgPlus, "Img -> ClearVolume", 1024, 1024, 1024, 1024, 0., 1.0);
-                    cv.requestDisplay();
+
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            System.out.println("AAA");
+                            final ClearVolumeRendererInterface cv =
+                                    ClearVolume.initRealImg(imgPlus, "Img -> ClearVolume", 1024, 1024, 1024, 1024, 0.,
+                                                            1.0);
+                            cv.requestDisplay();
+                            while (cv.isShowing()) {
+                                try {
+                                    Thread.sleep(500);
+                                } catch (final InterruptedException b) {
+                                    b.printStackTrace();
+                                }
+                            }
+                            cv.close();
+                        }
+
+                    }.run();
                 }
 
             }
