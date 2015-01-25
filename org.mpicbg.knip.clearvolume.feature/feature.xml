@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.mpicbg.knip.clearvolume.feature"
+      id="de.mpicbg.knime.ip.clearvolume.feature"
       label="KNIME Image Processing - Clear Volume Integration"
-      version="1.1.1.qualifier"
+      version="0.1.0.qualifier"
       provider-name="MPI-CBG Dresden / University of Konstanz">
 
    <description>
-     ClearVolumen Integration for KNIME - Image Processing.
+      ClearVolumen Integration for KNIME - Image Processing.
    </description>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.base"
+         id="de.mpicbg.knip.clearvolume.base"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.bin.linux.x86"
+         id="de.mpicbg.knip.clearvolume.bin.linux.x86"
          os="linux"
          arch="x86"
          download-size="0"
@@ -25,7 +25,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.bin.linux.amd64"
+         id="de.mpicbg.knip.clearvolume.bin.linux.amd64"
          os="linux"
          arch="x86_64"
          download-size="0"
@@ -34,7 +34,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.bin.macosx.amd64"
+         id="de.mpicbg.knip.clearvolume.bin.macosx.amd64"
          os="macosx"
          arch="x86_64"
          download-size="0"
@@ -43,7 +43,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.bin.windows.x86"
+         id="de.mpicbg.knip.clearvolume.bin.windows.x86"
          os="win32"
          arch="x86"
          download-size="0"
@@ -52,7 +52,7 @@
          fragment="true"/>
 
    <plugin
-         id="org.mpicbg.knip.clearvolume.bin.windows.amd64"
+         id="de.mpicbg.knip.clearvolume.bin.windows.amd64"
          os="win32"
          arch="x86_64"
          download-size="0"
