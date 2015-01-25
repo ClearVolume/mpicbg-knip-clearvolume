@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ClearVolume Libraries for Linux x86_64
-Bundle-SymbolicName: org.mpicbg.knip.clearvolume.bin.linux.amd64
+Bundle-SymbolicName: de.mpicbg.knime.clearvolume.bin.linux.amd64
 Bundle-Version: 0.1.0.qualifier
-Fragment-Host: org.mpicbg.knip.clearvolume.base;bundle-version="0.1.0.qualifier"
+Fragment-Host: de.mpicbg.knime.clearvolume.base;bundle-version="0.1.0.qualifier"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-PlatformFilter: (&(osgi.os=linux)(osgi.arch=x86_64))
 Bundle-Vendor: University of Konstanz
