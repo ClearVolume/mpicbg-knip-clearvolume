@@ -10,13 +10,13 @@
    </description>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.base"
+         id="de.mpicbg.knime.ip.clearvolume.base"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.bin.linux.x86"
+         id="de.mpicbg.knime.ip.clearvolume.bin.linux.x86"
          os="linux"
          arch="x86"
          download-size="0"
@@ -25,7 +25,7 @@
          fragment="true"/>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.bin.linux.amd64"
+         id="de.mpicbg.knime.ip.clearvolume.bin.linux.amd64"
          os="linux"
          arch="x86_64"
          download-size="0"
@@ -34,7 +34,7 @@
          fragment="true"/>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.bin.macosx.amd64"
+         id="de.mpicbg.knime.ip.clearvolume.bin.macosx.amd64"
          os="macosx"
          arch="x86_64"
          download-size="0"
@@ -43,7 +43,7 @@
          fragment="true"/>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.bin.windows.x86"
+         id="de.mpicbg.knime.ip.clearvolume.bin.windows.x86"
          os="win32"
          arch="x86"
          download-size="0"
@@ -52,7 +52,7 @@
          fragment="true"/>
 
    <plugin
-         id="de.mpicbg.knip.clearvolume.bin.windows.amd64"
+         id="de.mpicbg.knime.ip.clearvolume.bin.windows.amd64"
          os="win32"
          arch="x86_64"
          download-size="0"

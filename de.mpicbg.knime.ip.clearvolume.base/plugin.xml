@@ -4,7 +4,7 @@
    <extension
          point="org.knime.knip.base.TableCellView">
       <TableCellView
-            TableCellViewFactory="org.mpicbg.knip.clearvolume.base.ClearVolumeViewer">
+            TableCellViewFactory="de.mpicbg.knime.ip.clearvolume.base.ClearVolumeViewer">
       </TableCellView>
    </extension>
 </plugin>

@@ -39,10 +39,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
         @Override
         public void run() {
-            cv = ClearVolume.initRealImg(imgPlus, "ClearVolume TableCellView",
-                                            windowWidth, windowHeight,
-                                            textureWidth, textureHeight,
-                                            minIntensity, maxIntensity);
+            cv =
+                    ClearVolume.initRealImg(imgPlus, "ClearVolume TableCellView", windowWidth, windowHeight,
+                                            textureWidth, textureHeight, minIntensity, maxIntensity);
             cv.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
             cv.requestDisplay();
         }
@@ -68,30 +67,53 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private ImgPlus<T> imgPlus;
 
     private JPanel mainPanel;
+
     private JPanel panelSimple;
+
     private JButton buttonSimpleOpen;
+
     private JButton buttonSimpleResetView;
+
     private JPanel panelAdvanced;
+
     private JButton buttonAdvancedOpen;
+
     private JButton buttonAdvancedResetView;
+
     private JTextField txtWinWidth;
+
     private JTextField txtWinHeight;
+
     private JTextField txtTextureWidth;
+
     private JTextField txtTextureHeight;
+
     private JTextField txtMinInt;
+
     private JTextField txtMaxInt;
+
     private JTextField txtVoxelSizeX;
+
     private JTextField txtVoxelSizeY;
+
     private JTextField txtVoxelSizeZ;
 
     private int windowWidth;
+
     private int windowHeight;
+
     private int textureWidth;
+
     private int textureHeight;
+
     private double minIntensity;
+
     private double maxIntensity;
+
     private double voxelSizeZ;
+
     private double voxelSizeY;
+
     private double voxelSizeX;
 
     private ClearVolumeThread cvThread;
@@ -101,8 +123,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public String getDescription() {
-        return "ClearVolume-KNIME integration.\n"
-                + "The viewer is capable of CUDA rendering of ImgPlus images. "
+        return "ClearVolume-KNIME integration.\n" + "The viewer is capable of CUDA rendering of ImgPlus images. "
                 + "If CUDA is not available a OpenCL render will be used.\n"
                 + "For more information see 'https://bitbucket.org/clearvolume/clearvolume/wiki/Home'.\n"
                 + "Credits to: Loic Royer, Martin Weigert, Ulrik Guenther, and Florian Jug.";
@@ -156,7 +177,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
         // ADVANCED TAB
 
-        JPanel panelAdvancedHelper = new JPanel(new GridLayout(9,2));
+        JPanel panelAdvancedHelper = new JPanel(new GridLayout(9, 2));
         JLabel lblWinWidth = new JLabel("Window width");
         txtWinWidth = new JTextField();
         JLabel lblWinHeight = new JLabel("Window height");
@@ -226,18 +247,18 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     }
 
     public void updateGuiFieldValues() {
-        txtWinWidth.setText(""+this.windowWidth);
-        txtWinHeight.setText(""+this.windowHeight);
+        txtWinWidth.setText("" + this.windowWidth);
+        txtWinHeight.setText("" + this.windowHeight);
 
-        txtTextureWidth.setText(""+this.textureWidth);
-        txtTextureHeight.setText(""+this.textureHeight);
+        txtTextureWidth.setText("" + this.textureWidth);
+        txtTextureHeight.setText("" + this.textureHeight);
 
-        txtMinInt.setText(""+this.minIntensity);
-        txtMaxInt.setText(""+this.maxIntensity);
+        txtMinInt.setText("" + this.minIntensity);
+        txtMaxInt.setText("" + this.maxIntensity);
 
-        txtVoxelSizeX.setText(""+this.voxelSizeX);
-        txtVoxelSizeY.setText(""+this.voxelSizeY);
-        txtVoxelSizeZ.setText(""+this.voxelSizeZ);
+        txtVoxelSizeX.setText("" + this.voxelSizeX);
+        txtVoxelSizeY.setText("" + this.voxelSizeY);
+        txtVoxelSizeZ.setText("" + this.voxelSizeZ);
     }
 
     /**
@@ -310,40 +331,67 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         int i;
         double d;
 
-        try { i = Integer.parseInt( txtWinWidth.getText() );
-        }catch(NumberFormatException e) { i = this.windowWidth; }
+        try {
+            i = Integer.parseInt(txtWinWidth.getText());
+        } catch (NumberFormatException e) {
+            i = this.windowWidth;
+        }
         this.windowWidth = i;
 
-        try { i = Integer.parseInt( txtWinHeight.getText() );
-        }catch(NumberFormatException e) { i = this.windowHeight; }
+        try {
+            i = Integer.parseInt(txtWinHeight.getText());
+        } catch (NumberFormatException e) {
+            i = this.windowHeight;
+        }
         this.windowHeight = i;
 
-        try { i = Integer.parseInt( txtTextureWidth.getText() );
-        }catch(NumberFormatException e) { i = this.textureWidth; }
+        try {
+            i = Integer.parseInt(txtTextureWidth.getText());
+        } catch (NumberFormatException e) {
+            i = this.textureWidth;
+        }
         this.textureWidth = i;
 
-        try { i = Integer.parseInt( txtTextureHeight.getText() );
-        }catch(NumberFormatException e) { i = this.textureHeight; }
+        try {
+            i = Integer.parseInt(txtTextureHeight.getText());
+        } catch (NumberFormatException e) {
+            i = this.textureHeight;
+        }
         this.textureHeight = i;
 
-        try { d = Double.parseDouble( txtMinInt.getText() );
-        }catch(NumberFormatException e) { d = this.minIntensity; }
+        try {
+            d = Double.parseDouble(txtMinInt.getText());
+        } catch (NumberFormatException e) {
+            d = this.minIntensity;
+        }
         this.minIntensity = d;
 
-        try { d = Double.parseDouble( txtMaxInt.getText() );
-        }catch(NumberFormatException e) { d = this.maxIntensity; }
+        try {
+            d = Double.parseDouble(txtMaxInt.getText());
+        } catch (NumberFormatException e) {
+            d = this.maxIntensity;
+        }
         this.maxIntensity = d;
 
-        try { d = Double.parseDouble( txtVoxelSizeX.getText() );
-        }catch(NumberFormatException e) { d = this.voxelSizeX; }
+        try {
+            d = Double.parseDouble(txtVoxelSizeX.getText());
+        } catch (NumberFormatException e) {
+            d = this.voxelSizeX;
+        }
         this.voxelSizeX = d;
 
-        try { d = Double.parseDouble( txtVoxelSizeY.getText() );
-        }catch(NumberFormatException e) { d = this.voxelSizeY; }
+        try {
+            d = Double.parseDouble(txtVoxelSizeY.getText());
+        } catch (NumberFormatException e) {
+            d = this.voxelSizeY;
+        }
         this.voxelSizeY = d;
 
-        try { d = Double.parseDouble( txtVoxelSizeZ.getText() );
-        }catch(NumberFormatException e) { d = this.voxelSizeZ; }
+        try {
+            d = Double.parseDouble(txtVoxelSizeZ.getText());
+        } catch (NumberFormatException e) {
+            d = this.voxelSizeZ;
+        }
         this.voxelSizeZ = d;
     }
 
@@ -353,7 +401,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public void actionPerformed(final ActionEvent e) {
 
-        if ( e.getSource().equals(buttonSimpleOpen) || e.getSource().equals(buttonAdvancedOpen)) {
+        if (e.getSource().equals(buttonSimpleOpen) || e.getSource().equals(buttonAdvancedOpen)) {
             if (imgPlus != null) {
                 if (cvThread != null) {
                     cvThread.dispose();
@@ -362,8 +410,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                 cvThread = new ClearVolumeThread();
                 cvThread.run();
             }
-        } else
-        if ( e.getSource().equals(buttonSimpleResetView) || e.getSource().equals(buttonAdvancedResetView)) {
+        } else if (e.getSource().equals(buttonSimpleResetView) || e.getSource().equals(buttonAdvancedResetView)) {
             cvThread.resetView();
         }
     }
