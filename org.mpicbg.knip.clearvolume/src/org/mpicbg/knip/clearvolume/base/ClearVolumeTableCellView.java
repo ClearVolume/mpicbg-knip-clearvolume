@@ -253,7 +253,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void onClose() {
-        cvThread.dispose();
+        if (cvThread != null) {
+            cvThread.dispose();
+        }
     }
 
     /**
@@ -261,7 +263,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void onReset() {
-        cvThread.dispose();
+        if (cvThread != null) {
+            cvThread.dispose();
+        }
     }
 
     /**
