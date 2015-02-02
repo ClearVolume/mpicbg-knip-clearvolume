@@ -1,4 +1,4 @@
-package org.mpicbg.knip.clearvolume.base;
+package de.mpicbg.knime.ip.clearvolume.base;
 
 import net.imglib2.type.NativeType;
 import net.imglib2.type.numeric.RealType;

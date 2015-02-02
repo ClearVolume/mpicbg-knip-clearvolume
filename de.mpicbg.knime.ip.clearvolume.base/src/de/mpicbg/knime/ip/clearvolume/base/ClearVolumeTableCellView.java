@@ -1,4 +1,4 @@
-package org.mpicbg.knip.clearvolume.base;
+package de.mpicbg.knime.ip.clearvolume.base;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
