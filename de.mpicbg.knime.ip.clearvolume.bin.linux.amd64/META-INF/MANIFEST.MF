@@ -3,9 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ClearVolume Libraries for Linux x86_64
 Bundle-SymbolicName: de.mpicbg.knime.ip.clearvolume.bin.linux.amd64
 Bundle-Version: 0.1.0.qualifier
-Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.1.0.qualifier"
+Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-PlatformFilter: (&(osgi.os=linux)(osgi.arch=x86_64))
 Bundle-Vendor: University of Konstanz
-Bundle-ClassPath: os/linux/x86_64/gluegen-rt-2.2.4-natives-linux-amd64.jar,
- os/linux/x86_64/jogl-all-2.2.4-natives-linux-amd64.jar

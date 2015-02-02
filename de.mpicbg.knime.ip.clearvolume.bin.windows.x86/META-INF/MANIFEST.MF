@@ -4,6 +4,6 @@ Bundle-Name: ClearVolume Libraries for Windows x86
 Bundle-SymbolicName: de.mpicbg.knime.ip.clearvolume.bin.windows.x86
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: University of Konstanz
-Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.1.0.qualifier"
+Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-PlatformFilter: (&(osgi.os=win32)(osgi.arch=x86))

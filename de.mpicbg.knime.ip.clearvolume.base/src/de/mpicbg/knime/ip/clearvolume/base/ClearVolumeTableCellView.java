@@ -43,7 +43,11 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                     ClearVolume.initRealImg(imgPlus, "ClearVolume TableCellView", windowWidth, windowHeight,
                                             textureWidth, textureHeight, minIntensity, maxIntensity);
             cv.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
-            cv.requestDisplay();
+            try{
+                cv.requestDisplay();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
 
         public void dispose() {
