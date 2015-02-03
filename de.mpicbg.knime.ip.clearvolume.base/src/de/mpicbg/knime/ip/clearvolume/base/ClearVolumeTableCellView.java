@@ -2,17 +2,17 @@ package de.mpicbg.knime.ip.clearvolume.base;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import net.imagej.ImgPlus;
 import net.imglib2.algorithm.stats.ComputeMinMax;
@@ -36,12 +36,22 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private class ClearVolumeThread implements Runnable {
 
         private ClearVolumeRendererInterface cv;
+        private Container container;
+
+        /**
+         * @param ctnrClearVolume
+         */
+        public ClearVolumeThread(final Container ctnrClearVolume) {
+            this.container = ctnrClearVolume;
+        }
 
         @Override
         public void run() {
-            cv =
-                    ClearVolume.initRealImg(imgPlus, "ClearVolume TableCellView", windowWidth, windowHeight,
-                                            textureWidth, textureHeight, minIntensity, maxIntensity);
+            cv = ClearVolume.initRealImg(imgPlus, "ClearVolume TableCellView",
+                                            512, 512,
+                                            textureWidth, textureHeight,
+                                            true,
+                                            minIntensity, maxIntensity);
             cv.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
             try{
                 cv.requestDisplay();
@@ -57,13 +67,23 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
             }
         }
 
-        public void resetView() {
-            setDefaultValues();
-            setMetadataValues();
+        public void updateView() {
+            activateGuiValues();
+
+            container.remove(cv.getNewtCanvasAWT());
+            run();
             cv.resetRotationTranslation();
             cv.resetBrightnessAndGammaAndTransferFunctionRanges();
-            cv.setVisible(false);
-            cv.setVisible(true);
+
+            SwingUtilities.invokeLater(new Runnable(){
+
+                @Override
+                public void run() {
+                    container.add(cv.getNewtCanvasAWT());
+//                    cv.setVisible(true);
+                }
+
+            });
         }
 
     }
@@ -71,23 +91,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private ImgPlus<T> imgPlus;
 
     private JPanel mainPanel;
-
-    private JPanel panelSimple;
-
-    private JButton buttonSimpleOpen;
-
-    private JButton buttonSimpleResetView;
-
-    private JPanel panelAdvanced;
-
-    private JButton buttonAdvancedOpen;
-
-    private JButton buttonAdvancedResetView;
-
-    private JTextField txtWinWidth;
-
-    private JTextField txtWinHeight;
-
+    private Container ctnrClearVolume;
+    private JPanel panelControls;
+    private JButton buttonUpdateView;
     private JTextField txtTextureWidth;
 
     private JTextField txtTextureHeight;
@@ -101,10 +107,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private JTextField txtVoxelSizeY;
 
     private JTextField txtVoxelSizeZ;
-
-    private int windowWidth;
-
-    private int windowHeight;
 
     private int textureWidth;
 
@@ -153,8 +155,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     }
 
     private void setDefaultValues() {
-        this.windowWidth = 1024;
-        this.windowHeight = 1024;
         this.textureWidth = 1024;
         this.textureHeight = 1024;
         this.minIntensity = 0.;
@@ -165,27 +165,17 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     }
 
     private void buildGui() {
-        mainPanel = new JPanel(new BorderLayout());
 
-        // SIMPLE TAB
+        mainPanel = new JPanel(new BorderLayout(3,3));
 
-        panelSimple = new JPanel(new BorderLayout());
-        buttonSimpleOpen = new JButton("Open Window");
-        buttonSimpleOpen.addActionListener(this);
+        ctnrClearVolume = new Container();
+        ctnrClearVolume.setLayout( new BorderLayout() );
 
-        buttonSimpleResetView = new JButton("Reset View");
-        buttonSimpleResetView.addActionListener(this);
+        buttonUpdateView = new JButton("Update View");
+        buttonUpdateView.addActionListener(this);
 
-        panelSimple.add(buttonSimpleOpen, BorderLayout.CENTER);
-        panelSimple.add(buttonSimpleResetView, BorderLayout.SOUTH);
-
-        // ADVANCED TAB
-
-        JPanel panelAdvancedHelper = new JPanel(new GridLayout(9, 2));
-        JLabel lblWinWidth = new JLabel("Window width");
-        txtWinWidth = new JTextField();
-        JLabel lblWinHeight = new JLabel("Window height");
-        txtWinHeight = new JTextField();
+        panelControls = new JPanel(new BorderLayout());
+        JPanel panelControlsHelper = new JPanel(new GridLayout(9,2));
 
         JLabel lblTextureWidth = new JLabel("Texture width");
         txtTextureWidth = new JTextField();
@@ -204,58 +194,34 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         JLabel lblVoxelSizeZ = new JLabel("VoxelDimension.Z");
         txtVoxelSizeZ = new JTextField();
 
-        panelAdvancedHelper.add(lblWinWidth);
-        panelAdvancedHelper.add(txtWinWidth);
-        panelAdvancedHelper.add(lblWinHeight);
-        panelAdvancedHelper.add(txtWinHeight);
+        panelControlsHelper.add(lblTextureWidth);
+        panelControlsHelper.add(txtTextureWidth);
+        panelControlsHelper.add(lblTextureHeight);
+        panelControlsHelper.add(txtTextureHeight);
 
-        panelAdvancedHelper.add(lblTextureWidth);
-        panelAdvancedHelper.add(txtTextureWidth);
-        panelAdvancedHelper.add(lblTextureHeight);
-        panelAdvancedHelper.add(txtTextureHeight);
+        panelControlsHelper.add(lblMinInt);
+        panelControlsHelper.add(txtMinInt);
+        panelControlsHelper.add(lblMaxInt);
+        panelControlsHelper.add(txtMaxInt);
 
-        panelAdvancedHelper.add(lblMinInt);
-        panelAdvancedHelper.add(txtMinInt);
-        panelAdvancedHelper.add(lblMaxInt);
-        panelAdvancedHelper.add(txtMaxInt);
-
-        panelAdvancedHelper.add(lblVoxelSizeX);
-        panelAdvancedHelper.add(txtVoxelSizeX);
-        panelAdvancedHelper.add(lblVoxelSizeY);
-        panelAdvancedHelper.add(txtVoxelSizeY);
-        panelAdvancedHelper.add(lblVoxelSizeZ);
-        panelAdvancedHelper.add(txtVoxelSizeZ);
-
-        panelAdvanced = new JPanel(new BorderLayout());
-        buttonAdvancedOpen = new JButton("Open Window");
-        buttonAdvancedOpen.addActionListener(this);
-
-        buttonAdvancedResetView = new JButton("Reset View");
-        buttonAdvancedResetView.addActionListener(this);
-
-        JPanel panelHelper = new JPanel();
-        BoxLayout boxLayout = new BoxLayout(panelHelper, BoxLayout.X_AXIS);
-        panelHelper.add(buttonAdvancedResetView);
-        panelHelper.add(buttonAdvancedOpen);
-
-        panelAdvanced.add(new JScrollPane(panelAdvancedHelper), BorderLayout.CENTER);
-        panelAdvanced.add(panelHelper, BorderLayout.SOUTH);
+        panelControlsHelper.add(lblVoxelSizeX);
+        panelControlsHelper.add(txtVoxelSizeX);
+        panelControlsHelper.add(lblVoxelSizeY);
+        panelControlsHelper.add(txtVoxelSizeY);
+        panelControlsHelper.add(lblVoxelSizeZ);
+        panelControlsHelper.add(txtVoxelSizeZ);
 
         // PUTTING ALL TOGETHER
 
-        JTabbedPane tabs = new JTabbedPane();
-        tabs.addTab("Simple", panelSimple);
-        tabs.addTab("Advanced", panelAdvanced);
-
-        mainPanel.add(tabs, BorderLayout.CENTER);
+        panelControls.add(new JScrollPane(panelControlsHelper), BorderLayout.NORTH);
+        panelControls.add(buttonUpdateView,BorderLayout.SOUTH);
+        mainPanel.add(ctnrClearVolume, BorderLayout.CENTER);
+        mainPanel.add(panelControls, BorderLayout.EAST);
     }
 
     public void updateGuiFieldValues() {
-        txtWinWidth.setText("" + this.windowWidth);
-        txtWinHeight.setText("" + this.windowHeight);
-
-        txtTextureWidth.setText("" + this.textureWidth);
-        txtTextureHeight.setText("" + this.textureHeight);
+        txtTextureWidth.setText(""+this.textureWidth);
+        txtTextureHeight.setText(""+this.textureHeight);
 
         txtMinInt.setText("" + this.minIntensity);
         txtMaxInt.setText("" + this.maxIntensity);
@@ -309,6 +275,16 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
         setMetadataValues();
         updateGuiFieldValues();
+        updateClearVolumeContainer();
+    }
+
+    /**
+     *
+     */
+    private void updateClearVolumeContainer() {
+        cvThread = new ClearVolumeThread(this.ctnrClearVolume);
+        cvThread.run();
+        ctnrClearVolume.add( cvThread.cv.getNewtCanvasAWT(), BorderLayout.CENTER );
     }
 
     /**
@@ -335,25 +311,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         int i;
         double d;
 
-        try {
-            i = Integer.parseInt(txtWinWidth.getText());
-        } catch (NumberFormatException e) {
-            i = this.windowWidth;
-        }
-        this.windowWidth = i;
-
-        try {
-            i = Integer.parseInt(txtWinHeight.getText());
-        } catch (NumberFormatException e) {
-            i = this.windowHeight;
-        }
-        this.windowHeight = i;
-
-        try {
-            i = Integer.parseInt(txtTextureWidth.getText());
-        } catch (NumberFormatException e) {
-            i = this.textureWidth;
-        }
+        try { i = Integer.parseInt( txtTextureWidth.getText() );
+        }catch(NumberFormatException e) { i = this.textureWidth; }
         this.textureWidth = i;
 
         try {
@@ -405,17 +364,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public void actionPerformed(final ActionEvent e) {
 
-        if (e.getSource().equals(buttonSimpleOpen) || e.getSource().equals(buttonAdvancedOpen)) {
-            if (imgPlus != null) {
-                if (cvThread != null) {
-                    cvThread.dispose();
-                }
-                activateGuiValues();
-                cvThread = new ClearVolumeThread();
-                cvThread.run();
-            }
-        } else if (e.getSource().equals(buttonSimpleResetView) || e.getSource().equals(buttonAdvancedResetView)) {
-            cvThread.resetView();
+        if ( e.getSource().equals(buttonUpdateView) || e.getSource().equals(buttonUpdateView)) {
+            cvThread.updateView();
         }
     }
 
