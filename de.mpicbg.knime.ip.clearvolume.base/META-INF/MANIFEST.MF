@@ -33,7 +33,8 @@ Bundle-ClassPath: knip-clearvolume.jar,
  libs/miglayout-3.7.4-swing.jar,
  libs/miglayout-3.7.4.jar,
  libs/args4j-2.0.25.jar,
- libs/imglib-clearvolume-1.0.0-SNAPSHOT.jar
+ libs/imglib-clearvolume-1.0.0-SNAPSHOT.jar,
+ libs/imglib-clearvolume-1.0.0-SNAPSHOT-sources.jar
 Bundle-ActivationPolicy: lazy
 Export-Package: clearcuda,
  clearcuda.test,
