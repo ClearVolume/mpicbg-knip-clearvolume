@@ -6,8 +6,8 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.concurrent.TimeUnit;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +26,7 @@ import org.knime.knip.base.data.img.ImgPlusValue;
 import org.knime.knip.base.nodes.view.TableCellView;
 
 import clearvolume.renderer.ClearVolumeRendererInterface;
+import clearvolume.renderer.ControlJPanel;
 
 import com.jogamp.newt.awt.NewtCanvasAWT;
 
@@ -56,8 +57,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                                             true,
                                             minIntensity, maxIntensity);
             cv.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
-            cv.requestDisplay();
-            cv.waitToFinishAllDataBufferCopy(1000, TimeUnit.MILLISECONDS);
         }
 
         public void dispose() {
@@ -67,9 +66,20 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
             }
         }
 
+        public void setVoxelSize(final double voxelSizeX, final double voxelSizeY, final double voxelSizeZ) {
+            cv.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
+        }
+
         public void resetView() {
             cv.resetRotationTranslation();
             cv.resetBrightnessAndGammaAndTransferFunctionRanges();
+            updateView();
+        }
+
+        public void updateView() {
+            cv.notifyUpdateOfVolumeRenderingParameters();
+            cv.setVisible(false);
+            cv.setVisible(true);
         }
 
     }
@@ -79,6 +89,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private JPanel mainPanel;
     private Container ctnrClearVolume;
     private JPanel panelControls;
+    private JButton buttonReinitializeView;
+    private JButton buttonResetView;
     private JButton buttonUpdateView;
     private JTextField txtTextureWidth;
     private JTextField txtTextureHeight;
@@ -123,11 +135,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public Component getViewComponent() {
-        System.out.println("--== GET VIEW COMPONENT ==--");
+//        System.out.println("--== GET VIEW COMPONENT ==--");
         mainPanel = new JPanel(new BorderLayout(3,3));
         setDefaultValues();
-//        buildGui();
-//        updateGuiFieldValues();
         return mainPanel;
     }
 
@@ -136,15 +146,15 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void updateComponent(final DataValue valueToView) {
-        System.out.println("--== UPDATE COMPONENT ==--");
+//        System.out.println("--== UPDATE COMPONENT ==--");
         imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
         setMetadataValues();
-        updateClearVolumeContainer();
+        reinitializeClearVolumeContainer();
     }
 
     private void setDefaultValues() {
-        this.textureWidth = 1024;
-        this.textureHeight = 1024;
+        this.textureWidth = 512;
+        this.textureHeight = 512;
         this.minIntensity = 0.;
         this.maxIntensity = 255;
         this.voxelSizeX = 1.;
@@ -152,7 +162,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         this.voxelSizeZ = 1.;
     }
 
-    public void updateGuiFieldValues() {
+    public void pushToGuiValues() {
         txtTextureWidth.setText(""+this.textureWidth);
         txtTextureHeight.setText(""+this.textureHeight);
 
@@ -167,9 +177,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     /**
     *
     */
-   private void updateClearVolumeContainer() {
+   private void reinitializeClearVolumeContainer() {
        // New ClearVolume thread...
-       cvThread = new ClearVolumeThread(imgPlus);//this.ctnrClearVolume);
+       cvThread = new ClearVolumeThread(imgPlus);
        cvThread.run();
        // Display!
        buildGui();
@@ -195,7 +205,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
    /**
     * Read all validly entered text field values and activate them.
     */
-   private void activateGuiValues() {
+   private void getGuiValues() {
        int i;
        double d;
 
@@ -235,28 +245,62 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
        ctnrClearVolume = new Container();
        ctnrClearVolume.setLayout(new BorderLayout());
+
+       ControlJPanel panelClearVolumeControl = null;
+
        if (cvThread != null) {
            NewtCanvasAWT canvas = cvThread.cv.getNewtCanvasAWT();
            ctnrClearVolume.add(canvas, BorderLayout.CENTER);
+
+           panelClearVolumeControl = new ControlJPanel();
+           panelClearVolumeControl.setClearVolumeRendererInterface(cvThread.cv);
        } else {
-           System.err.println("Intended? You called buildGui cvThread==null!");
+           System.err.println("ClearVolumeTableCellView: Did you intend this? You called buildGui while cvThread==null!");
        }
 
-       buttonUpdateView = new JButton("Update View");
-       buttonUpdateView.addActionListener(this);
+       // Main controls panel
+       // -------------------
+       panelControls = new JPanel();
+       panelControls.setLayout(new BoxLayout(panelControls, BoxLayout.Y_AXIS));
 
-       panelControls = new JPanel(new BorderLayout());
-       JPanel panelControlsHelper = new JPanel(new GridLayout(9,2));
+       JPanel scollPanelCtrl = new JPanel();
+       scollPanelCtrl.add(new JScrollPane(panelControls));
+
+
+       // Parameters requiring reinitialization
+       // -------------------------------------
+       JPanel panelControlsHelper = new JPanel(new GridLayout(4,2));
+
+       JLabel lblMinInt = new JLabel("Min. intensity");
+       txtMinInt = new JTextField();
+       JLabel lblMaxInt = new JLabel("Max. intensity");
+       txtMaxInt = new JTextField();
 
        JLabel lblTextureWidth = new JLabel("Texture width");
        txtTextureWidth = new JTextField();
        JLabel lblTextureHeight = new JLabel("Texture height");
        txtTextureHeight = new JTextField();
 
-       JLabel lblMinInt = new JLabel("Min. intensity");
-       txtMinInt = new JTextField();
-       JLabel lblMaxInt = new JLabel("Max. intensity");
-       txtMaxInt = new JTextField();
+       panelControlsHelper.add(lblMinInt);
+       panelControlsHelper.add(txtMinInt);
+       panelControlsHelper.add(lblMaxInt);
+       panelControlsHelper.add(txtMaxInt);
+
+       panelControlsHelper.add(lblTextureWidth);
+       panelControlsHelper.add(txtTextureWidth);
+       panelControlsHelper.add(lblTextureHeight);
+       panelControlsHelper.add(txtTextureHeight);
+
+       buttonReinitializeView = new JButton("Restart View");
+       buttonReinitializeView.addActionListener(this);
+
+       panelControls.add(panelControlsHelper);
+       panelControls.add(buttonReinitializeView);
+
+
+       // Parameters that require a view update
+       // -------------------------------------
+       panelControlsHelper = new JPanel(new GridLayout(3,2));
 
        JLabel lblVoxelSizeX = new JLabel("VoxelDimension.X");
        txtVoxelSizeX = new JTextField();
@@ -265,16 +309,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
        JLabel lblVoxelSizeZ = new JLabel("VoxelDimension.Z");
        txtVoxelSizeZ = new JTextField();
 
-       panelControlsHelper.add(lblTextureWidth);
-       panelControlsHelper.add(txtTextureWidth);
-       panelControlsHelper.add(lblTextureHeight);
-       panelControlsHelper.add(txtTextureHeight);
-
-       panelControlsHelper.add(lblMinInt);
-       panelControlsHelper.add(txtMinInt);
-       panelControlsHelper.add(lblMaxInt);
-       panelControlsHelper.add(txtMaxInt);
-
        panelControlsHelper.add(lblVoxelSizeX);
        panelControlsHelper.add(txtVoxelSizeX);
        panelControlsHelper.add(lblVoxelSizeY);
@@ -282,15 +316,31 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
        panelControlsHelper.add(lblVoxelSizeZ);
        panelControlsHelper.add(txtVoxelSizeZ);
 
-       // PUTTING ALL TOGETHER
+       buttonUpdateView = new JButton("Update View");
+       buttonUpdateView.addActionListener(this);
 
-       panelControls.add(new JScrollPane(panelControlsHelper), BorderLayout.NORTH);
-       panelControls.add(buttonUpdateView,BorderLayout.SOUTH);
+       panelControls.add(panelControlsHelper);
+       panelControls.add(buttonUpdateView);
+
+
+       // View reset button (restores metadata setup and other defaults)
+       // --------------------------------------------------------------
+       buttonResetView = new JButton("Reset View");
+       buttonResetView.addActionListener(this);
+
+       panelControls.add(buttonResetView);
+
+       // Display hijacked control container if possible
+       // ----------------------------------------------
+       if (panelClearVolumeControl != null) {
+           mainPanel.add(panelClearVolumeControl,BorderLayout.SOUTH);
+       }
+
        mainPanel.add(ctnrClearVolume, BorderLayout.CENTER);
-       mainPanel.add(panelControls, BorderLayout.EAST);
+       mainPanel.add(scollPanelCtrl, BorderLayout.EAST);
 
        // Update the values in the gui fields
-       updateGuiFieldValues();
+       pushToGuiValues();
 
        mainPanel.setVisible(true);
    }
@@ -301,9 +351,24 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
    @Override
    public void actionPerformed(final ActionEvent e) {
 
-       if ( e.getSource().equals(buttonUpdateView) || e.getSource().equals(buttonUpdateView)) {
-           updateClearVolumeContainer();
+       if ( e.getSource().equals(buttonReinitializeView)) {
+           getGuiValues();
+           reinitializeClearVolumeContainer();
+       } else if ( e.getSource().equals(buttonUpdateView)) {
+           getGuiValues();
+           cvThread.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
+           cvThread.updateView();
+       } else if ( e.getSource().equals(buttonResetView)) {
+           if (imgPlus != null) {
+               this.voxelSizeX = imgPlus.averageScale(0);
+               this.voxelSizeY = imgPlus.averageScale(1);
+               this.voxelSizeZ = imgPlus.averageScale(2);
+           }
+           cvThread.setVoxelSize(voxelSizeX, voxelSizeY, voxelSizeZ);
+           pushToGuiValues();
+           cvThread.resetView();
        }
+
    }
     /**
      * {@inheritDoc}
