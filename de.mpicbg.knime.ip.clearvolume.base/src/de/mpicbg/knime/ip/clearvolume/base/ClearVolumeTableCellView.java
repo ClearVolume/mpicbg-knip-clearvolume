@@ -27,6 +27,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     private JPanel mainPanel;
     private GenericClearVolumeGui<T> panelGui;
 
+    private DataValue oldValueToView;
+
     /**
      * {@inheritDoc}
      */
@@ -53,7 +55,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public Component getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
-        mainPanel = new JPanel(new BorderLayout());
+        if (mainPanel == null) {
+            mainPanel = new JPanel(new BorderLayout());
+        }
         return mainPanel;
     }
 
@@ -63,13 +67,24 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public void updateComponent(final DataValue valueToView) {
         System.out.println("--== UPDATE COMPONENT ==--");
-        imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
+
+        // if the currently shown imgPlus is the same as the one we get now
+        if (panelGui!=null && oldValueToView==valueToView) {
+            // do nothing
+            return;
+        }
+        oldValueToView = valueToView;
+
+        // Clean up old instance if still alive
+        if (panelGui != null) {
+            panelGui.getClearVolumeManager().close();
+            panelGui.setVisible(false);
+            mainPanel.remove(panelGui);
+        }
+
+        // Build a new one and show it
+        ImgPlus<T> imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
         if (imgPlus != null) {
-            if (panelGui != null) {
-                panelGui.getClearVolumeManager().close();
-                panelGui.setVisible(false);
-                mainPanel.remove(panelGui);
-            }
             // Display!
             panelGui = new GenericClearVolumeGui<T>(imgPlus, 256, 256);
             mainPanel.add(panelGui, BorderLayout.CENTER);
