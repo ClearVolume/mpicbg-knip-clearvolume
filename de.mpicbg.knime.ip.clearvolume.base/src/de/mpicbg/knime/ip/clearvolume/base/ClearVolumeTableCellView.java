@@ -52,7 +52,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public Component getViewComponent() {
-//        System.out.println("--== GET VIEW COMPONENT ==--");
+        System.out.println("--== GET VIEW COMPONENT ==--");
         mainPanel = new JPanel(new BorderLayout());
         return mainPanel;
     }
@@ -62,12 +62,18 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void updateComponent(final DataValue valueToView) {
-//        System.out.println("--== UPDATE COMPONENT ==--");
+        System.out.println("--== UPDATE COMPONENT ==--");
         imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
-
-        // Display!
-        panelGui = new GenericClearVolumeGui<T>(imgPlus, 512, 512);
-        mainPanel.add(panelGui, BorderLayout.CENTER);
+        if (imgPlus != null) {
+            if (panelGui != null) {
+                panelGui.getClearVolumeManager().close();
+                panelGui.setVisible(false);
+                mainPanel.remove(panelGui);
+            }
+            // Display!
+            panelGui = new GenericClearVolumeGui<T>(imgPlus, 256, 256);
+            mainPanel.add(panelGui, BorderLayout.CENTER);
+        }
     }
 
     /**
@@ -83,8 +89,12 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void onClose() {
-        panelGui.getClearVolumeManager().close();
-        mainPanel.removeAll();
+        System.out.println("--== ON CLOSE ==--");
+        if (panelGui != null) {
+            panelGui.getClearVolumeManager().close();
+            panelGui.setVisible(false);
+            mainPanel.remove(panelGui);
+        }
     }
 
     /**
@@ -92,6 +102,12 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
      */
     @Override
     public void onReset() {
+        System.out.println("--== ON RESET ==--");
+        if (panelGui != null) {
+            panelGui.getClearVolumeManager().close();
+            panelGui.setVisible(false);
+            mainPanel.remove(panelGui);
+        }
     }
 
     /**
