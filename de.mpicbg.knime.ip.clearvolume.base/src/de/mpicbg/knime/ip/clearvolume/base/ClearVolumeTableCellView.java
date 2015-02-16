@@ -75,19 +75,19 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         }
         oldValueToView = valueToView;
 
-        // Clean up old instance if still alive
-        if (panelGui != null) {
-            panelGui.getClearVolumeManager().close();
-            panelGui.setVisible(false);
-            mainPanel.remove(panelGui);
-        }
-
         // Build a new one and show it
         ImgPlus<T> imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
         if (imgPlus != null) {
+            // Clean up old instance if still alive
+            if (panelGui != null) {
+                panelGui.setVisible(false);
+                panelGui.closeOldSession();
+                mainPanel.remove(panelGui);
+            }
             // Display!
             panelGui = new GenericClearVolumeGui<T>(imgPlus, 256, 256);
             mainPanel.add(panelGui, BorderLayout.CENTER);
+            mainPanel.validate();
         }
     }
 
