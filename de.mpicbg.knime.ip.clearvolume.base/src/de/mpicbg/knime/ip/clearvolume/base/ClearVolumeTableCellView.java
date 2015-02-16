@@ -59,12 +59,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public Component getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
-
         appicon = GenericClearVolumeGui.getCurrentAppIcon();
-
-        if (mainPanel == null) {
-            mainPanel = new JPanel(new BorderLayout());
-        }
+        mainPanel = new JPanel(new BorderLayout());
         return mainPanel;
     }
 
