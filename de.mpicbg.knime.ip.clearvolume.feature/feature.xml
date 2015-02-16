@@ -9,6 +9,10 @@
       ClearVolumen Integration for KNIME - Image Processing.
    </description>
 
+   <requires>
+      <import plugin="org.knime.knip.io"/>
+   </requires>
+
    <plugin
          id="de.mpicbg.knime.ip.clearvolume.base"
          download-size="0"
