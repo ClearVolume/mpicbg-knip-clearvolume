@@ -6,7 +6,7 @@
       provider-name="MPI-CBG Dresden / University of Konstanz">
 
    <description>
-      ClearVolumen Integration for KNIME - Image Processing.
+      ClearVolume Integration for KNIME - Image Processing.
    </description>
 
    <requires>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.mpicbg.knime.ip.clearvolume.update"
+      label="KNIME Image Processing - Clear Volume Integration"
+      version="0.1.0.qualifier"
+      provider-name="MPI-CBG Dresden / University of Konstanz">
+
+   <description>
+      ClearVolume Integration for KNIME - Image Processing.
+   </description>
+
+   <includes
+         id="de.mpicbg.knime.ip.clearvolume.feature"
+         version="0.0.0"/>
+
+</feature>
