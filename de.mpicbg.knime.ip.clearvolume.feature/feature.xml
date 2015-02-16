@@ -20,15 +20,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="de.mpicbg.knime.ip.clearvolume.bin.linux.x86"
-         os="linux"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
          id="de.mpicbg.knime.ip.clearvolume.bin.linux.amd64"
          os="linux"
          arch="x86_64"
@@ -41,15 +32,6 @@
          id="de.mpicbg.knime.ip.clearvolume.bin.macosx.amd64"
          os="macosx"
          arch="x86_64"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
-
-   <plugin
-         id="de.mpicbg.knime.ip.clearvolume.bin.windows.x86"
-         os="win32"
-         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
