@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import net.imagej.ImgPlus;
 import net.imglib2.type.NativeType;
@@ -76,18 +77,34 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         oldValueToView = valueToView;
 
         // Build a new one and show it
-        ImgPlus<T> imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
+        final ImgPlus<T> imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
         if (imgPlus != null) {
             // Clean up old instance if still alive
             if (panelGui != null) {
-                panelGui.setVisible(false);
                 panelGui.closeOldSession();
+                panelGui.setVisible(false);
                 mainPanel.remove(panelGui);
             }
             // Display!
-            panelGui = new GenericClearVolumeGui<T>(imgPlus, 256, 256);
-            mainPanel.add(panelGui, BorderLayout.CENTER);
-            mainPanel.validate();
+            try {
+                final Runnable todo = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        panelGui = new GenericClearVolumeGui<T>(imgPlus, 768, false);
+                        mainPanel.add(panelGui, BorderLayout.CENTER);
+                        mainPanel.validate();
+                    }
+                };
+
+                if ( javax.swing.SwingUtilities.isEventDispatchThread() ) {
+                    todo.run();
+                } else {
+                    SwingUtilities.invokeAndWait( todo );
+                }
+            } catch ( final Exception e ) {
+                System.err.println( "Relaunching CV session was interrupted in GenericClearVolumeGui!" );
+            }
         }
     }
 
@@ -106,7 +123,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     public void onClose() {
         System.out.println("--== ON CLOSE ==--");
         if (panelGui != null) {
-            panelGui.getClearVolumeManager().close();
+            panelGui.closeOldSession();
             panelGui.setVisible(false);
             mainPanel.remove(panelGui);
         }
