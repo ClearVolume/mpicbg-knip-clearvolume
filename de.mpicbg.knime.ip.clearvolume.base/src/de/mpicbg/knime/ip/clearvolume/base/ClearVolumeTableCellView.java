@@ -2,6 +2,7 @@ package de.mpicbg.knime.ip.clearvolume.base;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -30,6 +31,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
     private DataValue oldValueToView;
 
+    private Image appicon;
+
     /**
      * {@inheritDoc}
      */
@@ -56,6 +59,9 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public Component getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
+
+        appicon = GenericClearVolumeGui.getCurrentAppIcon();
+
         if (mainPanel == null) {
             mainPanel = new JPanel(new BorderLayout());
         }
@@ -94,6 +100,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                         panelGui = new GenericClearVolumeGui<T>(imgPlus, 768, false);
                         mainPanel.add(panelGui, BorderLayout.CENTER);
                         mainPanel.validate();
+
+                        GenericClearVolumeGui.setCurrentAppIcon( appicon );
                     }
                 };
 
