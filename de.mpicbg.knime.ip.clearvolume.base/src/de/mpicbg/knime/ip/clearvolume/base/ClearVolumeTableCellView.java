@@ -100,7 +100,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                 if ( javax.swing.SwingUtilities.isEventDispatchThread() ) {
                     todo.run();
                 } else {
-                    SwingUtilities.invokeAndWait( todo );
+                    SwingUtilities.invokeLater( todo );
                 }
             } catch ( final Exception e ) {
                 System.err.println( "Relaunching CV session was interrupted in GenericClearVolumeGui!" );
