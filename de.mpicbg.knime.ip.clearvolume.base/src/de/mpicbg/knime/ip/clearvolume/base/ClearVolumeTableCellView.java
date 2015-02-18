@@ -61,7 +61,12 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     public Component getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
         mainPanel = new JPanel(new BorderLayout());
-        appicon = GenericClearVolumeGui.getCurrentAppIcon();
+        try{
+            appicon = GenericClearVolumeGui.getCurrentAppIcon();
+        } catch (Exception e) {
+            System.err.println("ClearVolume could not read the current app icon! Check linked com.apple.eawt version...");
+            e.printStackTrace();
+        }
         return mainPanel;
     }
 
