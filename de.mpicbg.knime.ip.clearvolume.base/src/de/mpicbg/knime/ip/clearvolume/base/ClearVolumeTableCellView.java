@@ -17,6 +17,7 @@ import org.knime.core.node.config.ConfigWO;
 import org.knime.knip.base.data.img.ImgPlusValue;
 import org.knime.knip.base.nodes.view.TableCellView;
 
+import de.mpicbg.jug.clearvolume.gui.ClearVolumeSplashFrame;
 import de.mpicbg.jug.clearvolume.gui.GenericClearVolumeGui;
 
 /**
@@ -59,8 +60,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public Component getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
-        appicon = GenericClearVolumeGui.getCurrentAppIcon();
         mainPanel = new JPanel(new BorderLayout());
+        appicon = GenericClearVolumeGui.getCurrentAppIcon();
         return mainPanel;
     }
 
@@ -93,9 +94,13 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
                     @Override
                     public void run() {
+                        ClearVolumeSplashFrame splash = new ClearVolumeSplashFrame();
+
                         panelGui = new GenericClearVolumeGui<T>(imgPlus, 768, false);
                         mainPanel.add(panelGui, BorderLayout.CENTER);
                         mainPanel.validate();
+
+                        splash.dispose();
 
                         GenericClearVolumeGui.setCurrentAppIcon( appicon );
                     }
@@ -108,6 +113,7 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                 }
             } catch ( final Exception e ) {
                 System.err.println( "Relaunching CV session was interrupted in GenericClearVolumeGui!" );
+                e.printStackTrace();
             }
         }
     }
