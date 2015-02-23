@@ -18,6 +18,7 @@ import org.knime.knip.base.data.img.ImgPlusValue;
 import org.knime.knip.base.nodes.view.TableCellView;
 
 import de.mpicbg.jug.clearvolume.gui.GenericClearVolumeGui;
+import de.mpicbg.jug.plugins.ClearVolumePlugin;
 
 /**
  * @author jug
@@ -85,7 +86,10 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
 
         // Build a new one and show it
         final ImgPlus<T> imgPlus = ((ImgPlusValue<T>)valueToView).getImgPlus();
-        if (imgPlus != null) {
+
+        boolean canBeShown = ClearVolumePlugin.checkIfShowable(mainPanel, imgPlus, true);
+
+        if (canBeShown) {
             // Clean up old instance if still alive
             if (panelGui != null) {
                 panelGui.closeOldSession();
