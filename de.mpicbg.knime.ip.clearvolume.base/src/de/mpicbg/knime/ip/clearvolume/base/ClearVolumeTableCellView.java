@@ -64,6 +64,8 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
         try{
             appicon = GenericClearVolumeGui.getCurrentAppIcon();
         } catch (Exception e) {
+//            NodeLogger.getLogger("ClearVolumeTableCellView").error("ClearVolume could not read the current app icon! Check linked com.apple.eawt version...");
+//            NodeLogger.getLogger("ClearVolumeTableCellView").error("Stacktrace:\n"+e.toString());
             System.err.println("ClearVolume could not read the current app icon! Check linked com.apple.eawt version...");
             e.printStackTrace();
         }
