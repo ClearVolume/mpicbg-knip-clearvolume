@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/cleargl-0.9.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/clearvolume-0.9.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
@@ -28,5 +25,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/nativelibs4java-utils-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/opencl4java-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/trove4j-3.0.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/cleargl-0.9.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearvolume-0.9.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
