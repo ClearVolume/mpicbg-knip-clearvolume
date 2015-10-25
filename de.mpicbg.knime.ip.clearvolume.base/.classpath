@@ -13,7 +13,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/dx-1.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gluegen-rt-2.2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/hamcrest-core-1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/imglib-clearvolume-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/original-imglib-clearvolume-1.1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/javacl-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/javacl-core-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/jcuda-maven-6.5.jar"/>
@@ -25,8 +25,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/nativelibs4java-utils-1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/opencl4java-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/trove4j-3.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/cleargl-0.9.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/clearvolume-0.9.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/cleargl-1.0.3-2-g9dd131a.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearvolume-1.1.1-5-g3491120.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
