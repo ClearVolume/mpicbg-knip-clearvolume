@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libs/original-imglib-clearvolume-1.1.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/args4j-2.0.29.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/bridj-0.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/cglib-nodep-2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearvolume-1.1.1-5-g3491120.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/cleargl-1.0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-collections-3.2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-io-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-lang-2.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-math3-3.4.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/CoreMem-0.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CoreMem-0.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/dx-1.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gluegen-rt-2.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/gluegen-rt-2.3.1.jar" sourcepath="/Users/jug/.m2/repository/org/jogamp/gluegen/gluegen-rt/2.3.1/gluegen-rt-2.3.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/hamcrest-core-1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/javacl-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/javacl-core-1.0.0-RC4.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/jcuda-maven-6.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/jogl-all-2.2.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jcl-core-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jcuda-maven-7.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/jogl-all-2.3.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/junit-4.12.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/log4j-api-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/log4j-core-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/miglayout-3.7.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/nativelibs4java-utils-1.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/objenesis-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/opencl4java-1.0.0-RC4.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/trove4j-3.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/clearcuda-0.9.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/cleargl-1.0.3-2-g9dd131a.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/clearvolume-1.1.1-5-g3491120.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/original-imglib-clearvolume-1.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
