@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ClearVolume Libraries for OSX
 Bundle-SymbolicName: de.mpicbg.knime.ip.clearvolume.bin.macosx.amd64
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: University of Konstanz
-Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.1.0"
+Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Eclipse-PlatformFilter: (&(osgi.os=macosx)(osgi.arch=x86_64))
