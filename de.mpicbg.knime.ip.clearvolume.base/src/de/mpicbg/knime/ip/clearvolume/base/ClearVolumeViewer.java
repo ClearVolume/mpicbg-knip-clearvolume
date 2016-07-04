@@ -20,10 +20,10 @@ public class ClearVolumeViewer<T extends RealType<T> & NativeType<T>> implements
      * {@inheritDoc}
      */
     @Override
-    public String getCellViewName() {
+    public String getCellViewDescription() {
         return "ClearVolume-KNIME integration.\n" + "The viewer is capable of CUDA rendering of ImgPlus images. "
                 + "If CUDA is not available a OpenCL render will be used.\n"
-                + "For more information see 'https://bitbucket.org/clearvolume/clearvolume/wiki/Home'.\n"
+                + "For more information see 'https://tech.knime.org/book/clearvolume'.\n"
                 + "Credits to: Loic Royer, Martin Weigert, Ulrik Guenther, and Florian Jug.";
     }
 
@@ -31,7 +31,7 @@ public class ClearVolumeViewer<T extends RealType<T> & NativeType<T>> implements
      * {@inheritDoc}
      */
     @Override
-    public String getCellViewDescription() {
+    public String getCellViewName() {
         return "ClearVolume";
     }
 

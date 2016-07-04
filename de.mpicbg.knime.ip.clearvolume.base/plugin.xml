@@ -2,9 +2,9 @@
 <?eclipse version="3.0"?>
 <plugin>
    <extension
-         point="org.knime.knip.base.TableCellView">
-      <TableCellView
-            TableCellViewFactory="de.mpicbg.knime.ip.clearvolume.base.ClearVolumeViewer">
-      </TableCellView>
+         point="org.knime.knip.cellviewer.cellviews">
+      <CellView
+            CellViewProviderFactory="de.mpicbg.knime.ip.clearvolume.base.ClearVolumeViewer">
+      </CellView>
    </extension>
 </plugin>
