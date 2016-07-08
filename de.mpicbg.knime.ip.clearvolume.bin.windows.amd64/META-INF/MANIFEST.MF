@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ClearVolume Libraries for Windows x86_64
 Bundle-SymbolicName: de.mpicbg.knime.ip.clearvolume.bin.windows.amd64
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.2.1.qualifier
 Bundle-Vendor: University of Konstanz
 Fragment-Host: de.mpicbg.knime.ip.clearvolume.base;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
