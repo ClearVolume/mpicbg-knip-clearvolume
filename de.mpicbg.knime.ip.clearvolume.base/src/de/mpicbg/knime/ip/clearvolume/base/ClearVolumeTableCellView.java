@@ -36,16 +36,12 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
     @Override
     public JPanel getViewComponent() {
         System.out.println("--== GET VIEW COMPONENT ==--");
+
+        // This makes newt windows NOT steal the app icon.
+        System.setProperty("newt.window.icons", "null,null");
+
         mainPanel = new JPanel(new BorderLayout());
-        try {
-            appicon = GenericClearVolumeGui.getCurrentAppIcon();
-        } catch (Exception e) {
-            //            NodeLogger.getLogger("ClearVolumeTableCellView").error("ClearVolume could not read the current app icon! Check linked com.apple.eawt version...");
-            //            NodeLogger.getLogger("ClearVolumeTableCellView").error("Stacktrace:\n"+e.toString());
-            System.err
-                    .println("ClearVolume could not read the current app icon! Check linked com.apple.eawt version...");
-            e.printStackTrace();
-        }
+
         return mainPanel;
     }
 
@@ -88,8 +84,6 @@ public class ClearVolumeTableCellView<T extends RealType<T> & NativeType<T>> imp
                         mainPanel.validate();
 
                         //                        splash.dispose();
-
-                        GenericClearVolumeGui.setCurrentAppIcon(appicon);
                     }
                 };
 
